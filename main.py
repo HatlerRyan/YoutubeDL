@@ -15,14 +15,14 @@ if x == 'v':
         # print(stream)
         download_question = input("Is this music or a podcast? m/p ")
         if download_question == 'm':
-            stream.download('C:\\Users\\hatle\\Documents\\Fun\\Music')
+            stream.download('music_downloads')
         elif download_question == 'p':
-            stream.download('C:\\Users\\hatle\\Documents\\Fun\\podcast')
+            stream.download('podcast_downloads')
     elif audio_only_question == 'n':
         # for stream in yt.streams.filter(progressive=True):
         # print(stream)
         stream = yt.streams.get_by_itag(22)
-        stream.download('C:\\Users\\hatle\\Documents\\Fun\\videos')
+        stream.download('video_downloads')
 elif x == 'c':
     channel_question = input('Which channel do you want to search? PMS/HD ').lower()
     video_url = []
