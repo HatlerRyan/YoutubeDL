@@ -1,5 +1,9 @@
 from pytube import YouTube, Channel
-# install pyinstaller
+from tkinter import *
+
+
+window = Tk()
+window.title("YoutubeDl")
 
 x = input("Specific video or search a channel? v/c ")
 if x == 'v':
@@ -15,14 +19,14 @@ if x == 'v':
         # print(stream)
         download_question = input("Is this music or a podcast? m/p ")
         if download_question == 'm':
-            stream.download('C:\\Users\\hatle\\Documents\\Fun\\Music')
+            stream.download('music_downloads')
         elif download_question == 'p':
-            stream.download('C:\\Users\\hatle\\Documents\\Fun\\podcast')
+            stream.download('podcast_downloads')
     elif audio_only_question == 'n':
         # for stream in yt.streams.filter(progressive=True):
         # print(stream)
         stream = yt.streams.get_by_itag(22)
-        stream.download('C:\\Users\\hatle\\Documents\\Fun\\videos')
+        stream.download('video_downloads')
 elif x == 'c':
     channel_question = input('Which channel do you want to search? PMS/HD ').lower()
     video_url = []
@@ -44,7 +48,6 @@ elif x == 'c':
     for download in selections:
         yt = YouTube(video_url[int(download)])
 
-
         if audio_only_question == 'y':
             # audio_only = yt.streams.filter(only_audio=True)
             # for stream in audio_only:
@@ -53,12 +56,13 @@ elif x == 'c':
             # print(stream)
             download_question = input("Is this music or a podcast? m/p ")
             if download_question == 'm':
-                stream.download('C:\\Users\\hatle\\Documents\\Fun\\Music')
+                stream.download('music_downloads')
             elif download_question == 'p':
-                stream.download('C:\\Users\\hatle\\Documents\\Fun\\podcast')
+                stream.download('podcast_downloads')
         elif audio_only_question == 'n':
             # for stream in yt.streams.filter(progressive=True):
             # print(stream)
             stream = yt.streams.get_by_itag(22)
-            stream.download('C:\\Users\\hatle\\Documents\\Fun\\videos')
+            stream.download('video_downloads')
 
+window.mainloop()
