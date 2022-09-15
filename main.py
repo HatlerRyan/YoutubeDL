@@ -1,5 +1,5 @@
-from tkinter import *
-from function_file import SomethingRandom
+from tkinter import messagebox, Tk, Label, StringVar, Radiobutton, Entry, Button
+from function_file import video_only
 
 window = Tk()
 window.title("YoutubeDL")
@@ -8,13 +8,18 @@ url_text = Label(text="URL of:")
 url_text.grid(column=0, row=0, columnspan=2)
 
 
+
+# -------------functions------------------#
+
+
 def selected():
-    radiobutton_value = channel_or_video.get()
-    return radiobutton_value
+    channel_or_video_value = channel_or_video.get()
+    return channel_or_video_value
 
 def busted_face():
-    if selected == 'video':
-        messagebox.askquestion("sjkdflsj", "djfksljf")
+    if selected() == "video":
+        online_location = url_entry.get()
+        video_only(online_location)
 
 
 channel_or_video = StringVar(None, "video")
@@ -28,7 +33,7 @@ url_entry.focus()
 
 url_entry.grid(column=0, row=4, columnspan=2)
 # next_button_press = SomethingRandom.next_button_press(url_type="help")
-what_type = SomethingRandom(url_type=selected())
+# what_type = SomethingRandom(url_type=selected())
 # print(what_type)
 
 next_button = Button(text="Next", command=busted_face)
