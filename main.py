@@ -1,5 +1,5 @@
 from tkinter import messagebox, Tk, Label, StringVar, Radiobutton, Entry, Button
-from function_file import video_only
+from function_file import video_only, chanel_only
 
 window = Tk()
 window.title("YoutubeDL")
@@ -12,19 +12,24 @@ url_text.grid(column=0, row=0, columnspan=2)
 # -------------functions------------------#
 
 
-def selected():
+def selected_c_or_v():
     channel_or_video_value = channel_or_video.get()
     return channel_or_video_value
 
 def busted_face():
-    if selected() == "video":
-        online_location = url_entry.get()
-        video_only(online_location)
+    url = url_entry.get()
+    if selected_c_or_v() == "video":
+        video_only(url)
+    elif selected_c_or_v() == "channel":
+        chanel_only(url)
 
 
-channel_or_video = StringVar(None, "video")
-channel = Radiobutton(text="Channel", variable=channel_or_video, value="channel", command=selected)
-video = Radiobutton(text='Video', variable=channel_or_video, value="video", command=selected)
+#------------Program----------#
+
+
+channel_or_video = StringVar(None, "channel")
+channel = Radiobutton(text="Channel", variable=channel_or_video, value="channel", command=selected_c_or_v)
+video = Radiobutton(text='Video', variable=channel_or_video, value="video", command=selected_c_or_v)
 
 channel.grid(column=0, row=1, sticky="e")
 video.grid(column=1, row=1, sticky="w")
