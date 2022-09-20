@@ -1,23 +1,27 @@
 from pytube import Channel, YouTube
-from tkinter import messagebox, Tk, Radiobutton, StringVar, Toplevel
+from tkinter import messagebox, Tk, Radiobutton, StringVar, Toplevel, IntVar, Checkbutton
+
+
 
 
 class ChannelList:
     def __init__(self):
-        # self.title = title
-        self.video_variable = StringVar(None)
+        self.video_variable = IntVar()
 
-    #
     def selected_video(self):
         print(self.video_variable)
 
-    def video_list(self, url, channel_window, number):
-        self.video_variable = number
-        video = Radiobutton(channel_window, text=f' {YouTube(url).title}', variable=number,
-                            value=number, command=self.selected_video)
-        #
-        video.grid(row=number, column=0, sticky='w')
 
+    def video_list(self, url, number, channel_window):
+        videos = Checkbutton(channel_window, text=f' {YouTube(url).title}', variable=self.video_variable)
+        videos.grid(row=number, column=0, sticky='w')
+
+    # def video_list(self, url, channel_window, number):
+    #     self.rb_value = number
+    #     video = Radiobutton(channel_window, text=f' {YouTube(url).title}', variable=self.video_variable,
+    #                         value=number, command=self.selected_video)
+    #     #
+    #     video.grid(row=number, column=0, sticky='w')
 
 
 def video_only(url):
@@ -58,11 +62,11 @@ def chanel_only(url):
     channel_window = Toplevel()
     channel_window.title('Last 10 videos')
 
-    for url in c.video_urls[:10]:
+    for url in c.video_urls[:5]:
         url_list.append(url)
         len_url_list = len(url_list)
         video = ChannelList()
-        video.video_list(url=url, channel_window=channel_window, number=len_url_list)
+        video.video_list(url=url, number=len_url_list, channel_window=channel_window)
     # ChannelList.selected_video()
     # selections = input('Select videos you wish to download. ').split()
     # audio_only_question = input('Do you want audio only? y/n ')
@@ -78,4 +82,3 @@ def chanel_only(url):
     #     elif audio_only_question == 'n':
     #         stream = yt.streams.get_by_itag(22)
     #         stream.download('video_downloads')
-    channel_window.mainloop()

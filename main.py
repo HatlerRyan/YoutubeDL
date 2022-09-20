@@ -9,12 +9,14 @@ url_text.grid(column=0, row=0, columnspan=2)
 
 
 
+
 # -------------functions------------------#
 
 
 def selected_c_or_v():
     channel_or_video_value = channel_or_video.get()
     return channel_or_video_value
+
 
 def busted_face():
     url = url_entry.get()
@@ -24,7 +26,7 @@ def busted_face():
         chanel_only(url)
 
 
-#------------Program----------#
+# ------------Program----------#
 
 
 channel_or_video = StringVar(None, "channel")
@@ -34,6 +36,7 @@ video = Radiobutton(text='Video', variable=channel_or_video, value="video", comm
 channel.grid(column=0, row=1, sticky="e")
 video.grid(column=1, row=1, sticky="w")
 url_entry = Entry(width=30)
+url_entry.insert(0, "https://www.youtube.com/c/HammerDahn/videos")
 url_entry.focus()
 
 url_entry.grid(column=0, row=4, columnspan=2)
@@ -43,8 +46,5 @@ url_entry.grid(column=0, row=4, columnspan=2)
 
 next_button = Button(text="Next", command=busted_face)
 next_button.grid(column=0, row=6, columnspan=2, pady=5)
-
-
-
 
 window.mainloop()
