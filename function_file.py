@@ -1,25 +1,22 @@
 from pytube import Channel, YouTube
-from tkinter import messagebox, Tk, Radiobutton, StringVar
-
+from tkinter import messagebox, Tk, Radiobutton, StringVar, Toplevel
 
 
 class ChannelList:
-    def __init__(self, url):
-        self.url = url
+    def __init__(self):
         # self.title = title
         self.video_variable = StringVar(None)
-        self.video_list_value = self.video_variable.get()
-        self.video_num = 0
-#
-    def selected_video(self):
-        print(self.video_list_value)
 
-    def video_list(self, video_number):
-        video_label =
-# #         video = Radiobutton(text="Channel", variable=variable, value=video_num, command=selected_video)
-# #         # video = Radiobutton(text='Video', variable=self.video_list, value="video", command=self.selected_video)
-# #         video.pack()
-# #         self.video_num += 1
+    #
+    def selected_video(self):
+        print(self.video_variable)
+
+    def video_list(self, url, channel_window, number):
+        self.video_variable = number
+        video = Radiobutton(channel_window, text=f' {YouTube(url).title}', variable=number,
+                            value=number, command=self.selected_video)
+        #
+        video.grid(row=number, column=0, sticky='w')
 
 
 
@@ -52,19 +49,21 @@ def video_only(url):
             stream.download('video_downloads')
             print("It's in the video folder")
 
+
 def chanel_only(url):
-    video_url = []
-    video_num = 0
+    url_list = []
+    loop_num = 0
+    channel_url = url
     c = Channel(url)
-    # print(c)
-    channel_window = Tk()
+    channel_window = Toplevel()
     channel_window.title('Last 10 videos')
 
     for url in c.video_urls[:10]:
-        ChannelList.video_list(url, video_num)
-    #     video_url.append(url)
-    #     print(f'{video_num} {YouTube(url).title}')
-    #     video_num += 1
+        url_list.append(url)
+        len_url_list = len(url_list)
+        video = ChannelList()
+        video.video_list(url=url, channel_window=channel_window, number=len_url_list)
+    # ChannelList.selected_video()
     # selections = input('Select videos you wish to download. ').split()
     # audio_only_question = input('Do you want audio only? y/n ')
     # for download in selections:
