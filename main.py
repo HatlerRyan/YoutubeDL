@@ -1,4 +1,4 @@
-from tkinter import messagebox, Tk, Label, StringVar, Radiobutton, Entry, Button
+from tkinter import Tk, Label, StringVar, Radiobutton, Entry, Button
 from function_file import video_only, chanel_only
 
 window = Tk()
@@ -6,8 +6,6 @@ window.title("YoutubeDL")
 window.config(width=500, height=500, pady=20, padx=20)
 url_text = Label(text="URL of:")
 url_text.grid(column=0, row=0, columnspan=2)
-
-
 
 
 # -------------functions------------------#
@@ -36,7 +34,7 @@ video = Radiobutton(text='Video', variable=channel_or_video, value="video", comm
 channel.grid(column=0, row=1, sticky="e")
 video.grid(column=1, row=1, sticky="w")
 url_entry = Entry(width=30)
-url_entry.insert(0, "https://www.youtube.com/c/HammerDahn/videos")
+url_entry.insert(0, "https://www.youtube.com/c/AniLifts/videos")
 url_entry.focus()
 
 url_entry.grid(column=0, row=4, columnspan=2)

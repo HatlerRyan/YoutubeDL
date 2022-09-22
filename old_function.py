@@ -5,6 +5,7 @@ if x == 'v':
     yt = YouTube(input("What's the URL? "))
     video_title = yt.title
     print(video_title)
+    print(yt)
     audio_only_question = input('Do you want audio only? y/n ')
     if audio_only_question == 'y':
         stream = yt.streams.get_by_itag(140)
@@ -36,6 +37,7 @@ elif x == 'c':
     audio_only_question = input('Do you want audio only? y/n ')
     for download in selections:
         yt = YouTube(video_url[int(download)])
+        print(yt)
         if audio_only_question == 'y':
             stream = yt.streams.get_by_itag(140)
             download_question = input("Is this music or a podcast? m/p ")

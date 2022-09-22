@@ -1,38 +1,85 @@
 from pytube import Channel, YouTube
-from tkinter import messagebox, Tk, Radiobutton, StringVar, Toplevel, IntVar, Checkbutton
+from tkinter import messagebox, Toplevel, Radiobutton, Checkbutton, Button, StringVar, Label
 
 
+def selected_type(youtube_list, req_video_type):
+    if req_video_type == 'music':
+        for vid in youtube_list:
+            yt = YouTube(vid)
+            stream = yt.streams.get_by_itag(140)
+            stream.download('music_downloads')
+        print("done")
+    elif req_video_type == 'video':
+        for vid in youtube_list:
+            yt = YouTube(vid)
+            stream = yt.streams.get_by_itag(140)
+            stream.download('video_downloads')
+        print("done")
+    elif req_video_type == 'podcast':
+        for vid in youtube_list:
+            yt = YouTube(vid)
+            stream = yt.streams.get_by_itag(140)
+            stream.download('podcast_downloads')
+        print("done")
 
 
 class ChannelList:
+    youtube_urls = []
+
     def __init__(self):
-        self.video_variable = IntVar()
+        self.video_variable = StringVar()
+        # self.youtube_urls = []
+        self.checked_text = ''
 
     def selected_video(self):
-        print(self.video_variable)
-
+        if self.video_variable.get() == '0':
+            pass
+        elif self.video_variable.get() in self.youtube_urls:
+            pass
+        else:
+            self.youtube_urls.append(self.video_variable.get())
+        # print(self.youtube_urls)
 
     def video_list(self, url, number, channel_window):
-        videos = Checkbutton(channel_window, text=f' {YouTube(url).title}', variable=self.video_variable)
+        self.checked_text = url
+        videos = Checkbutton(channel_window, text=YouTube(url).title, variable=self.video_variable,
+                             onvalue=self.checked_text,
+                             tristatevalue='tri',
+                             command=lambda: ChannelList.selected_video(self))
         videos.grid(row=number, column=0, sticky='w')
 
-    # def video_list(self, url, channel_window, number):
-    #     self.rb_value = number
-    #     video = Radiobutton(channel_window, text=f' {YouTube(url).title}', variable=self.video_variable,
-    #                         value=number, command=self.selected_video)
-    #     #
-    #     video.grid(row=number, column=0, sticky='w')
+    def next_button(self):
+        self.download_selected_videos()
+
+    def download_selected_videos(self):
+        for url in self.youtube_urls:
+            pass
+
+    def select_type(self):
+        channel_type_window = Toplevel()
+        channel_type_window.title('Type selection')
+        channel_type_window.config(width=200, padx=20, pady=20)
+        self.type_select = StringVar(None, value="Music")
+        music = Radiobutton(channel_type_window, text="Music", variable=self.type_select, value="music")
+        video = Radiobutton(channel_type_window, text='Video', variable=self.type_select, value="video")
+        podcast = Radiobutton(channel_type_window, text='Podcast', variable=self.type_select, value="podcast")
+        type_label = Label(channel_type_window, text="Download as:")
+        type_label.grid(column=0, row=0, sticky="w")
+        video.grid(column=0, row=1, sticky="w")
+        music.grid(column=0, row=2, sticky="w")
+        podcast.grid(column=0, row=3, sticky="w")
+        download_button = Button(channel_type_window, text='Download',
+                                 command=lambda: selected_type(youtube_list=self.youtube_urls,
+                                                               req_video_type=self.type_select.get()))
+        download_button.grid(column=0, row=4, sticky='w')
 
 
 def video_only(url):
     yt = YouTube(url)
     video_title = yt.title
-    # print(video_title)
     video_confirmation_mb = messagebox.askyesno(title="video confirmation",
                                                 message=f"Is this the video you want to download?\n"
                                                         f"{video_title}")
-    # video_confirmation_mb
-    # print(video_confirmation_mb)
     if video_confirmation_mb:
         video_audio_mb = messagebox.askyesno(title="video or audio",
                                              message="Do you want audio only?")
@@ -41,7 +88,6 @@ def video_only(url):
             stream = yt.streams.get_by_itag(140)
             music_podcast_mb = messagebox.askyesno(title="music or podcast",
                                                    message="Is this music?")
-            music_podcast_mb
             if music_podcast_mb:
                 stream.download('music_downloads')
                 print("Jam on!")
@@ -56,29 +102,16 @@ def video_only(url):
 
 def chanel_only(url):
     url_list = []
-    loop_num = 0
-    channel_url = url
     c = Channel(url)
     channel_window = Toplevel()
     channel_window.title('Last 10 videos')
+    len_url_list = len(url_list)
 
-    for url in c.video_urls[:5]:
+    for url in c.video_urls[:10]:
         url_list.append(url)
         len_url_list = len(url_list)
         video = ChannelList()
         video.video_list(url=url, number=len_url_list, channel_window=channel_window)
-    # ChannelList.selected_video()
-    # selections = input('Select videos you wish to download. ').split()
-    # audio_only_question = input('Do you want audio only? y/n ')
-    # for download in selections:
-    #     yt = YouTube(video_url[int(download)])
-    #     if audio_only_question == 'y':
-    #         stream = yt.streams.get_by_itag(140)
-    #         download_question = input("Is this music or a podcast? m/p ")
-    #         if download_question == 'm':
-    #             stream.download('music_downloads')
-    #         elif download_question == 'p':
-    #             stream.download('podcast_downloads')
-    #     elif audio_only_question == 'n':
-    #         stream = yt.streams.get_by_itag(22)
-    #         stream.download('video_downloads')
+    next_button = Button(channel_window, text='Next', command=video.select_type)
+    next_button.grid(column=0, row=len_url_list + 1)
+
