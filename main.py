@@ -34,7 +34,7 @@ video = Radiobutton(text='Video', variable=channel_or_video, value="video", comm
 channel.grid(column=0, row=1, sticky="e")
 video.grid(column=1, row=1, sticky="w")
 url_entry = Entry(width=30)
-url_entry.insert(0, "https://www.youtube.com/c/AniLifts/videos")
+url_entry.insert(0, "")
 url_entry.focus()
 
 url_entry.grid(column=0, row=4, columnspan=2)
