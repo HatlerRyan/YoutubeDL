@@ -12,7 +12,7 @@ def selected_type(youtube_list, req_video_type):
     elif req_video_type == 'video':
         for vid in youtube_list:
             yt = YouTube(vid)
-            stream = yt.streams.get_by_itag(140)
+            stream = yt.streams.get_by_itag(22)
             stream.download('video_downloads')
         print("done")
     elif req_video_type == 'podcast':
